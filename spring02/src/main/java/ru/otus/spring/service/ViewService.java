@@ -6,8 +6,7 @@ import ru.otus.spring.domain.User;
 import java.util.List;
 
 public interface ViewService {
-    List<Question> listQuestions();
     User askUser();
-    int askQuestions();
+    int askQuestions(List<Question> questions);
     void showResult(int rightAnswersAmount);
 }

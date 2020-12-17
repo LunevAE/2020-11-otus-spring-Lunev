@@ -17,10 +17,6 @@ public class ViewServiceImpl implements ViewService{
         sc = new Scanner(System.in);
     }
 
-    public List<Question> listQuestions() {
-        return dao.listQuestions();
-    }
-
     public User askUser(){
         System.out.println("Enter your name");
         String name = sc.nextLine();
@@ -28,8 +24,7 @@ public class ViewServiceImpl implements ViewService{
         return new User(name);
     }
 
-    public int askQuestions(){
-        List<Question> questions = listQuestions();
+    public int askQuestions(List<Question> questions){
         int rightAnswersAmount = 0;
         for (Question question : questions) {
             System.out.println(question.getText());

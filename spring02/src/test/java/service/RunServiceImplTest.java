@@ -11,17 +11,18 @@ import ru.otus.spring.dao.QuestionDao;
 import ru.otus.spring.domain.Question;
 import ru.otus.spring.domain.User;
 import ru.otus.spring.service.ViewService;
-import ru.otus.spring.service.ViewServiceImpl;
 
 import java.util.List;
 import static org.mockito.Mockito.when;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
-public class ViewServiceImplTest {
+public class RunServiceImplTest {
     @Mock
     private QuestionDao questionDao;
 
+    @Mock
     private ViewService viewService;
 
     Question q1 = new Question("1+0?", "1");
@@ -30,12 +31,17 @@ public class ViewServiceImplTest {
 
     @BeforeEach
     public void setUp() {
-        viewService = new ViewServiceImpl(questionDao);
         q2 = new Question("2+0?", "2");
     }
 
     @Test
-    public void listQuestionsTest() {
-        when(viewService.listQuestions()).thenReturn(List.of(q1, q2));
+    public void RunServiceTest() {
+        when(questionDao.getListQuestions()).thenReturn(List.of(q1, q2));
+        when(viewService.askUser()).thenReturn(user);
+        when(viewService.askQuestions(List.of(q1, q2))).thenReturn(3);
+
+        assertThat(questionDao.getListQuestions()).isEqualTo(List.of(q1, q2));
+        assertThat(viewService.askUser()).isSameAs(user);
+        assertThat(viewService.askQuestions(List.of(q1, q2))).isEqualTo(3);
     }
 }
