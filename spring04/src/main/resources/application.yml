@@ -1,0 +1,8 @@
+application:
+  questionsFileName: questions_
+  locale: ru_RU
+
+spring:
+  messages:
+    basename: classpath:/bundle
+    encoding: utf-8
