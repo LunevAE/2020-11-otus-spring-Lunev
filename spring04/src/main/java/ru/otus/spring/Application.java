@@ -9,11 +9,9 @@ import ru.otus.spring.service.RunService;
 @SpringBootApplication
 @EnableConfigurationProperties(AppProps.class)
 public class Application {
-
     public static void main(String[] args) {
         var context = SpringApplication.run(Application.class, args);
         RunService service = context.getBean(RunService.class);
         service.run();
     }
-
 }

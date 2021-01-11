@@ -8,6 +8,7 @@ import org.springframework.test.context.TestPropertySource;
 import ru.otus.spring.dao.QuestionDao;
 import ru.otus.spring.domain.Question;
 import ru.otus.spring.domain.User;
+
 import java.util.List;
 import static org.mockito.Mockito.when;
 import static org.assertj.core.api.Assertions.assertThat;

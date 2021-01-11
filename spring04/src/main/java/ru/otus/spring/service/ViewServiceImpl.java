@@ -10,6 +10,7 @@ import java.util.Scanner;
 @Service
 public class ViewServiceImpl implements ViewService{
     private final LocalizedMessage localizedMessage;
+    private String userName = "";
     private final Scanner sc = new Scanner(System.in);
     public ViewServiceImpl(QuestionDao dao, LocalizedMessage localizedMessage) {
         this.localizedMessage = localizedMessage;
@@ -17,12 +18,15 @@ public class ViewServiceImpl implements ViewService{
 
     public User askUser(){
         System.out.println(localizedMessage.getMessage("message.name"));
-        String name = sc.nextLine();
+        userName = sc.nextLine();
 
-        return new User(name);
+        return new User(userName);
     }
 
     public int askQuestions(List<Question> questions){
+        if (userName == ""){
+            askUser();
+        }
         int rightAnswersAmount = 0;
         for (Question question : questions) {
             System.out.println(question.getText());
