@@ -4,7 +4,10 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Repository;
+import ru.otus.spring.domain.Author;
 import ru.otus.spring.domain.Book;
+import ru.otus.spring.domain.Genre;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collections;
@@ -25,7 +28,8 @@ public class BookDaoImpl implements BookDao{
 
     @Override
     public void insert(Book book) {
-        String sql = "insert into BOOKS (ID, NAME, AUTHOR_ID, GENRE_ID) values (:ID, :NAME, :AUTHOR_ID, :GENRE_ID)";
+        String sql = "insert into BOOKS (ID, NAME, AUTHOR_ID, GENRE_ID) values " +
+                     "(:ID, :NAME, :AUTHOR_ID, :GENRE_ID)";
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("ID", book.getId());
         params.addValue("NAME", book.getName());
@@ -37,20 +41,30 @@ public class BookDaoImpl implements BookDao{
 
     @Override
     public Book getById(Long id) {
+        String sql = "select BOOKS.ID, BOOKS.NAME, BOOKS.AUTHOR_ID, BOOKS.GENRE_ID, AUTHORS.NAME, GENRES.GENRE " +
+                "from BOOKS " +
+                "inner join AUTHORS on BOOKS.AUTHOR_ID = AUTHORS.ID " +
+                "inner join GENRES on BOOKS.GENRE_ID = GENRES.ID " +
+                "where BOOKS.ID = :ID";
         Map<String, Object> params = Collections.singletonMap("ID", id);
         return namedParameterJdbcOperations.queryForObject(
-                "select ID, NAME, AUTHOR_ID, GENRE_ID from BOOKS where ID = :ID", params, new BookDaoImpl.BookMapper()
+                sql, params, new BookDaoImpl.BookMapper()
         );
     }
 
     @Override
     public List<Book> getAll() {
-        return namedParameterJdbcOperations.getJdbcOperations().query("select ID, NAME, AUTHOR_ID, GENRE_ID from BOOKS", new BookDaoImpl.BookMapper());
+        String sql = "select BOOKS.ID, BOOKS.NAME, BOOKS.AUTHOR_ID, BOOKS.GENRE_ID, AUTHORS.NAME, GENRES.GENRE " +
+                     "from BOOKS " +
+                     "inner join AUTHORS on BOOKS.AUTHOR_ID = AUTHORS.ID " +
+                     "inner join GENRES on BOOKS.GENRE_ID = GENRES.ID";
+        return namedParameterJdbcOperations.getJdbcOperations().query(sql, new BookDaoImpl.BookMapper());
     }
 
     @Override
     public void update(Book book) {
-        String sql = "update BOOKS set NAME = :NAME, AUTHOR_ID = :AUTHOR_ID, GENRE_ID = :GENRE_ID  where ID = :ID";
+        String sql = "update BOOKS set NAME = :NAME, AUTHOR_ID = :AUTHOR_ID, GENRE_ID = :GENRE_ID  " +
+                     "where ID = :ID";
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("ID", book.getId())
                 .addValue("NAME", book.getName())
@@ -70,11 +84,9 @@ public class BookDaoImpl implements BookDao{
 
         @Override
         public Book mapRow(ResultSet resultSet, int i) throws SQLException {
-            long id = resultSet.getLong("ID");
-            String name = resultSet.getString("NAME");
-            long authorId = resultSet.getLong("AUTHOR_ID");
-            long genreId = resultSet.getLong("GENRE_ID");
-            return new Book(id, name, authorDao.getById(authorId), genreDao.getById(genreId));
+            return new Book(resultSet.getLong("ID"), resultSet.getString("NAME"),
+                   new Author(resultSet.getLong("AUTHOR_ID"),  resultSet.getString("AUTHORS.NAME")),
+                   new Genre(resultSet.getLong("GENRE_ID"), resultSet.getString("GENRE")));
         }
     }
 }
