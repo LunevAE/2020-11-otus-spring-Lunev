@@ -11,6 +11,8 @@ import ru.otus.spring.domain.Book;
 import ru.otus.spring.domain.Genre;
 import javax.persistence.NoResultException;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

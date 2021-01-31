@@ -9,7 +9,6 @@ import ru.otus.spring.domain.Book;
 import ru.otus.spring.domain.Genre;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class BookServiceImpl implements BookService{
@@ -25,9 +24,9 @@ public class BookServiceImpl implements BookService{
 
     @Transactional
     @Override
-    public void insertBook(String name, Long authorId, Long genreId) {
+    public void insertBook(String name, String authorName, Long genreId) {
         Genre genre = genreDao.findById(genreId).get();
-        Author author = authorDao.findById(authorId).get();
+        Author author = authorDao.findByName(authorName);
         bookDao.save(new Book(0, name, author, genre, null));
     }
 
@@ -47,20 +46,20 @@ public class BookServiceImpl implements BookService{
 
     @Transactional
     @Override
-    public void updateBook(Long id, String title, Long author, Long genre) {
+    public void updateBook(Long id, String title, String authorName, Long genreId) {
         Book book = bookDao.findById(id).get();
-        Author authorDaoById = authorDao.findById(author).get();
-        Genre genreDaoById = genreDao.findById(genre).get();
+        Author authorByName = authorDao.findByName(authorName);
+        Genre genreById = genreDao.findById(genreId).get();
 
         book.setName(title);
-        book.setAuthor(authorDaoById);
-        book.setGenre(genreDaoById);
+        book.setAuthor(authorByName);
+        book.setGenre(genreById);
     }
 
     @Transactional
     @Override
     public void deleteBook(Long id) {
-        Optional<Book> book = bookDao.findById(id);
-        bookDao.delete(book.get());
+        Book book = bookDao.findById(id).get();
+        bookDao.delete(book);
     }
 }

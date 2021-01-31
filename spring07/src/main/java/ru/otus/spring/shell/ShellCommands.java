@@ -17,8 +17,8 @@ public class ShellCommands {
     }
 
     @ShellMethod(value = "Insert book", key = {"ib", "insertBook"})
-    public void insertBook(@ShellOption("name") String name, @ShellOption("author") Long author, @ShellOption("genre") Long genre) {
-        bookService.insertBook(name, author, genre);
+    public void insertBook(@ShellOption("name") String name, @ShellOption("author") String authorName, @ShellOption("genre") Long genre) {
+        bookService.insertBook(name, authorName, genre);
     }
 
     @ShellMethod(value = "Get book", key = {"gb", "getBook"})
@@ -32,8 +32,8 @@ public class ShellCommands {
     }
 
     @ShellMethod(value = "Update book", key = {"ub", "updateBook"})
-    public void updateBook(@ShellOption("id") Long id, @ShellOption("name") String name, @ShellOption("author") Long author, @ShellOption("genre") Long genre) {
-        bookService.updateBook(id, name, author, genre);
+    public void updateBook(@ShellOption("id") Long id, @ShellOption("name") String name, @ShellOption("author") String authorName, @ShellOption("genre") Long genre) {
+        bookService.updateBook(id, name, authorName, genre);
     }
 
     @ShellMethod(value = "Delete book", key = {"db", "deleteBook"})
