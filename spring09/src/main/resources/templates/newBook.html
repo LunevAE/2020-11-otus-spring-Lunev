@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New book</title>
+<!--    <style>-->
+<!--    button {-->
+<!--        background-color: #4CAF50;-->
+<!--        border: 1px solid black;-->
+<!--        color: white;-->
+<!--        padding: 5px 5px;-->
+<!--        margin: 5px;-->
+<!--        font-size: 14px;-->
+<!--    }-->
+
+<!--    div {-->
+<!--       display: flex;-->
+<!--       flex-direction: row;-->
+<!--       justify-content: flex-start;-->
+<!--       align-items: center;-->
+<!--       background-color: #036ffc;-->
+<!--       margin: 10px;-->
+<!--       color: white;-->
+<!--    }-->
+<!--  </style>-->
+</head>
+<body>
+
+<form th:method="POST" th:action="@{/books/}" th:object="${book}">
+    <label>Title:</label>
+    <input type="text" required th:field="${book.title}"/>
+    <div>
+        <label>Author:</label>
+        <select th:field="${book.author}">
+            <option th:each="author : ${authors}" th:value="${author.id}" th:text="${author.name}">Author</option>
+        </select>
+    </div>
+    <div>
+        <label>Genre:</label>
+        <select th:field="${book.genre}">
+            <option th:each="genre : ${genres}" th:value="${genre.id}" th:text="${genre.genre}">Genre</option>
+        </select>
+    </div>
+    <button style="background-color: #036ffc; color: white;" type="submit">Add</button>
+</form>
+
+</body>
+</html>
