@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns: xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>List of all books</title>
+    <style>
+    button {
+        background-color: #4CAF50;
+        border: 1px solid black;
+        color: white;
+        padding: 5px 5px;
+        margin: 5px;
+        font-size: 14px;
+    }
+
+    div {
+       display: flex;
+       flex-direction: row;
+       justify-content: flex-start;
+       align-items: center;
+       background-color: #036ffc;
+       margin-bottom: 10px;
+       color: white;
+    }
+    p {
+        margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+    <form th:method="GET" th:action="@{/books/newBook}">
+        <button style="background-color: #036ffc;" type="submit">Add</button>
+    </form>
+    <h2>List of all books:</h2>
+    <tr th:each="book : ${books}">
+        <div>
+            <p th:text="${book.title}"></p>
+            <p th:text="${book.author.name}"></p>
+            <p th:text="${book.genre.genre}"></p>
+            <form th:method="GET" th:action="@{/books/book/{id}(id=${book.id})}">
+                <button type="submit">View</button>
+            </form>
+            <form th:method="GET" th:action="@{/books/edit/{id}(id=${book.id})}">
+                <button type="submit">Edit</button>
+            </form>
+            <form th:method="DELETE" th:action="@{/books/{id}(id=${book.id})}">
+                <button type="submit">Delete</button>
+            </form>
+        </div>
+    </tr>
+</body>
+
+</html>
