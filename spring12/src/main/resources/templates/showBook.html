@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns: xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Book</title>
+    <style>
+        p {
+            font-size: 16px;
+        }
+        div {
+           display: flex;
+           flex-direction: row;
+           justify-content: flex-start;
+           align-items: center;
+        }
+        .comment {
+           display: flex;
+           flex-direction: column;
+           justify-content: flex-start;
+           align-items: flex-start;
+        }
+        label {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <label>Name:</label>
+        <b><p th:text="${book.title}"></p></b>
+    </div>
+    <div>
+        <label>Author:</label>
+        <b><p th:text="${book.author.name}"></p></b>
+    </div>
+    <div>
+        <label>Genre:</label>
+        <b><p th:text="${book.genre.genre}"></p></b>
+    </div>
+    <div class="comment">
+        <div th:unless="${book.comments.empty}">
+            <label>Comments</label>
+        </div>
+        <tr th:each="comment  :${comments}">
+            <b><p th:text="${comment.comment}"></p></b>
+        </tr>
+    </div>
+</body>
+</html>
