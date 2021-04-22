@@ -47,9 +47,9 @@
         </dependency>
 
         <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>1.4.200</version>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.2.19.jre7</version>
         </dependency>
 
         <dependency>
@@ -62,34 +62,6 @@
 
     <build>
         <plugins>
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-assembly-plugin</artifactId>-->
-<!--                <version>3.3.0</version>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <phase>package</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>single</goal>-->
-<!--                        </goals>-->
-<!--                        <configuration>-->
-<!--                            <finalName>spring-docker</finalName>-->
-<!--                            <archive>-->
-<!--                                <manifest>-->
-<!--                                    <mainClass>-->
-<!--                                        ru.otus.spring.Application-->
-<!--                                    </mainClass>-->
-<!--                                </manifest>-->
-<!--                            </archive>-->
-<!--                            <descriptorRefs>-->
-<!--                                <descriptorRef>jar-with-dependencies</descriptorRef>-->
-<!--                            </descriptorRefs>-->
-<!--                            <appendAssemblyId>false</appendAssemblyId>-->
-<!--                        </configuration>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
-
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>

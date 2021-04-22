@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.util.List;
 
@@ -25,7 +26,8 @@ import java.util.List;
 @Table(name = "BOOKS")
 public class Book {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BOOKS_SQ")
+    @SequenceGenerator(name = "BOOKS_SQ", sequenceName = "BOOKS_SQ", allocationSize = 1)
     private Long id;
     private String title;
 
